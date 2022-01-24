@@ -167,9 +167,19 @@ struct Lesson: View {
 //                                                Text(tapText ? song.text : "")
 //                                                .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif)).foregroundColor(colorSelected)
 //                                            }.frame(height: scrollText || tapText == false ? 0 : 400)
-                                            Text(tapText && scrollText ? song.text : "")
-                                                .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif))
+                                        HStack(alignment: .top) {
+                                            Text(tapText && scrollText ? song.text : "").padding(.horizontal)
+                                                    .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif))
                                                 .foregroundColor(colorSelected)
+                                            Button(action: {UIPasteboard.general.string = self.song.text}, label: {
+                                                Image(systemName: tapText && scrollText ? "doc.on.doc.fill" : ""  ).font(.title2).foregroundColor(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
+                                            }).padding(.horizontal)
+                                                .contextMenu{
+                                                Button(action: {UIPasteboard.general.string = self.song.text
+                                                }){
+                                                    Text("Скопировать текст песни")}
+                                            }
+                                        }
                                                 
                                             
                                         
@@ -199,16 +209,7 @@ struct Lesson: View {
                         Image(systemName: tapStar ? "star.fill" : "star")
                                 .font(.title2)
                                 .foregroundColor(.yellow)}
-                                                
-                                                
-                                                
-                                        Button(action: {UIPasteboard.general.string = self.song.text}, label: {
-                                            Image(systemName: "doc.on.doc.fill").font(.title3).foregroundColor(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
-                                        }).contextMenu{
-                                            Button(action: {UIPasteboard.general.string = self.song.text
-                                            }){
-                                                Text("Скопировать текст песни")}
-                                        }
+                                    
                                             Button(action: {self.isPresented.toggle()}){
                                                 Image(systemName: "gear").font(.title3).foregroundColor(Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)))}
                                         })
