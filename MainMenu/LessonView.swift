@@ -203,13 +203,13 @@ struct Lesson: View {
                                                 Image(systemName: checkmark ? "checkmark.circle.fill" :"checkmark.circle" ).foregroundColor(checkmark ? .green : .gray).font(.title3)}
                     Button(action: {
                         self.favourite.favourites.append(FavouritesNumbers(number: youtubeData.firstIndex(where: { $0.link == youtubeLink.link })!))
+    
                         self.tapStar.toggle()
                         
                     }){
                         Image(systemName: tapStar ? "star.fill" : "star")
                                 .font(.title2)
                                 .foregroundColor(.yellow)}
-                                    
                                             Button(action: {self.isPresented.toggle()}){
                                                 Image(systemName: "gear").font(.title3).foregroundColor(Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)))}
                                         })

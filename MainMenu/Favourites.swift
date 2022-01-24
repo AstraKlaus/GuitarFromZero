@@ -18,29 +18,20 @@ struct FavouritesNumbers: Identifiable,Codable {
 class Favourite: ObservableObject {
     @Published var favourites: [FavouritesNumbers]{
         didSet{
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(favourites){
+            if let encoded = try? JSONEncoder().encode(favourites){
                 UserDefaults.standard.set(encoded, forKey: "Items")
-                print("Here3")
             }
             
         }
     }
     init() {
         if let favourite = UserDefaults.standard.data(forKey: "Items"){
-            let decoder = JSONDecoder()
-            if let decoded = try? decoder.decode([FavouritesNumbers].self, from: favourite){
+            if let decoded = try? JSONDecoder().decode([FavouritesNumbers].self, from: favourite){
                 self.favourites = decoded
-                print("Here2")
                 return
-            }else{
-                self.favourites = [FavouritesNumbers]()
-                print("Here")
             }
-        }else{
-            self.favourites = [FavouritesNumbers]()
-            print("Here1")
         }
+        self.favourites = []
     }
 }
 

@@ -42,7 +42,7 @@ struct NeuSectionView: View {
     @Environment(\.colorScheme) var scheme
     var section: Section
 var body: some View {
-        VStack{
+        
                 ZStack {
                     Color(scheme == .light ? #colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1) : .black)
                         .edgesIgnoringSafeArea(.all)
@@ -81,8 +81,7 @@ var body: some View {
                         .multilineTextAlignment(.leading)
                     
                 }
-                
-            }
+
         .padding()
     
         
