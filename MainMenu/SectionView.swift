@@ -10,51 +10,51 @@ import SwiftUI
 
 
 struct SectionView: View {
-var section: Section
-var body: some View {
-ZStack{
-RoundedRectangle(cornerRadius: 25)
-.frame(height: 100, alignment: .top)
-.foregroundColor(Color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)).opacity(0.3))
-.shadow(color: .gray, radius: 5, x: 0, y: 0)
-HStack(spacing: 10){
-    Text("\(sectionData.firstIndex(where: {$0.text == section.text})!)")
-        .font(.title)
-        .foregroundColor(.black)
-        .frame(width: 50, height: 100)
-    RoundedRectangle(cornerRadius: 25.0, style: .continuous)
-        .frame(width: 2, height: 90)
-        .foregroundColor(.black.opacity(0.3))
-    Text(section.text.capitalized)
-        .font(.subheadline)
-        .foregroundColor(.black)
-        .multilineTextAlignment(.leading)
-        .frame(height: 100)
-}.frame(width: 350, height: 100,alignment: .leading)
-
-
-}
-.padding(.leastNormalMagnitude)
-}
+    var section: Section
+    var body: some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 25)
+                .frame(height: 100, alignment: .top)
+                .foregroundColor(Color(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)).opacity(0.3))
+                .shadow(color: .gray, radius: 5, x: 0, y: 0)
+            HStack(spacing: 10){
+                Text("\(sectionData.firstIndex(where: {$0.text == section.text})!)")
+                    .font(.title)
+                    .foregroundColor(.black)
+                    .frame(width: 50, height: 100)
+                RoundedRectangle(cornerRadius: 25.0, style: .continuous)
+                    .frame(width: 2, height: 90)
+                    .foregroundColor(.black.opacity(0.3))
+                Text(section.text.capitalized)
+                    .font(.subheadline)
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
+                    .frame(height: 100)
+            }.frame(width: 350, height: 100,alignment: .leading)
+            
+            
+        }
+        .padding(.leastNormalMagnitude)
+    }
 }
 
 struct NeuSectionView: View {
-@Environment(\.colorScheme) var scheme
-var section: Section
-var body: some View {
-ScrollView {
-ForEach(numbersData[sectionData.firstIndex{$0.text == section.text}!]..<numbersData[sectionData.firstIndex{$0.text == section.text}!]+11) { item in
-    NavigationLink(destination: Lesson(section: sectionData[item], youtubeLink: youtubeData[item], song: songsData[(item >= 0 && item <= 10) ? item : 0])) {
-        ZStack {
+    @Environment(\.colorScheme) var scheme
+    var section: Section
+    var body: some View {
+        ScrollView {
+            ForEach(numbersData[sectionData.firstIndex{$0.text == section.text}!]..<numbersData[sectionData.firstIndex{$0.text == section.text}!]+11) { item in
+                NavigationLink(destination: Lesson(section: sectionData[item], youtubeLink: youtubeData[item], song: songsData[(item >= 0 && item <= 10) ? item : 0])) {
+                    ZStack {
                         Color(scheme == .light ? #colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1) : .black)
                             .edgesIgnoringSafeArea(.all)
                         Text(sectionData[item].title + sectionData[item].text)
                             .font(.system(size: 20, weight: .regular, design: .rounded))
                             .foregroundColor(.primary)
                             .padding(.horizontal)
-                        .frame(width: 350, height: 100,alignment: .leading)
+                            .frame(width: 350, height: 100,alignment: .leading)
                             .background(
-                            ZStack {
+                                ZStack {
                                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                                         .foregroundColor(.white)
                                     
@@ -64,8 +64,7 @@ ForEach(numbersData[sectionData.firstIndex{$0.text == section.text}!]..<numbersD
                                         )
                                         .blur(radius: 2)
                                         .padding(3)
-                                        
-                                        
+                            
                                     Image("unnamed")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
@@ -83,14 +82,14 @@ ForEach(numbersData[sectionData.firstIndex{$0.text == section.text}!]..<numbersD
                             .multilineTextAlignment(.leading)
                         
                     }
-
-        .padding()
+                    
+                    .padding()
+                }
+            }
+        }
+        .background(Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
+        
     }
-}
-}
-.background(Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
-
-}
 }
 
 

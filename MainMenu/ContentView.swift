@@ -18,6 +18,15 @@ struct ContentView: View {
         UINavigationBar.appearance().barTintColor = UIColor(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
         UITabBar.appearance().barTintColor = UIColor(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
         UITableView.appearance().backgroundColor = UIColor(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
+        UITabBar.appearance().isHidden = false
+        if #available(iOS 15.0, *) {
+            let tabBarAppearance = UITabBarAppearance()
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = .red
+            UITabBar.appearance().barTintColor = UIColor(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
+            UITableView.appearance().backgroundColor = UIColor(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
+        }
     }
     var body: some View {
         TabView{
@@ -27,31 +36,31 @@ struct ContentView: View {
                     Color(scheme == .light ? #colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1) : #colorLiteral(red: 0.09178318828, green: 0.09180641919, blue: 0.09178014845, alpha: 1))
                         .edgesIgnoringSafeArea(.all)
                     ScrollView(showsIndicators: false){
-                            MainVeiw()
-                            ExtraLessonView()
-                        }
-                        //.background(BackGroundView())
+                        MainVeiw()
+                        ExtraLessonView()
+                    }
+                    //.background(BackGroundView())
                     
                     
-                    .background(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
-                        
+                    .background(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
+                    
                     .navigationBarTitle("Уроки",displayMode: .inline).font(.title)
                     //.background(BackGroundView())
                     
                     .toolbar() {
                         
                         NavigationLink(destination: SettingsView()){Image(systemName:"gear")
-                            .tag("Settings")
+                                .tag("Settings")
                             .font(.title3)}
-
+                        
                     }
                     
                     /*
-                    .navigationBarColor(scheme == .light ? Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)) : Color(#colorLiteral(red: 0.09178318828, green: 0.09180641919, blue: 0.09178014845, alpha: 1)))
-                    */
+                     .navigationBarColor(scheme == .light ? Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)) : Color(#colorLiteral(red: 0.09178318828, green: 0.09180641919, blue: 0.09178014845, alpha: 1)))
+                     */
                 }
             }
-             
+            
             
             .tabItem {
                 Image(systemName: "guitars")
@@ -72,11 +81,11 @@ struct ContentView: View {
                         .tag(3)
                     Text("Избранное")
                 }
-                
-        }.background(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
-        .accentColor(scheme == .light ?  Color(#colorLiteral(red: 0.09178318828, green: 0.09180641919, blue: 0.09178014845, alpha: 1)) : Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)))
-        .environmentObject(favourite)
-        
+            
+        }.background(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
+            .accentColor(scheme == .light ?  Color(#colorLiteral(red: 0.09178318828, green: 0.09180641919, blue: 0.09178014845, alpha: 1)) : Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1))).edgesIgnoringSafeArea(.all)
+            .environmentObject(favourite)
+            .tabViewStyle(DefaultTabViewStyle())
     }
 }
 
@@ -107,29 +116,6 @@ let nameData = ["№0-9","№10-20","№20-30","№30-40","№40-50","№50-60",
 let numbersData = [0,11,21,31,41,51,61]
 let colorsData = [UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),]
 
-
-
-func SubMainView(number: Int) -> some View {
-    return
-        ScrollView {
-            ForEach(numbersData[number]..<numbersData[number]+11) { item in
-                NavigationLink(
-                    destination:
-                        Lesson(section: sectionData[item], youtubeLink: youtubeData[item], song: songsData[(item >= 0 && item <= 10) ? item : 0])
-                        
-                        
-                ){
-                    NeuSectionView(section: sectionData[item])
-                        
-                        .navigationBarTitle(nameData[number])
-                }
-                
-            }
-            
-        }
-        //.background(BackGroundView)
-        .background(Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
-}
 
 
 struct ExtraLessonView: View {
