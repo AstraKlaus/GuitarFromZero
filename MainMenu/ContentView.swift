@@ -93,9 +93,8 @@ struct MainVeiw: View {
         VStack(alignment: .center, spacing:0){
             ForEach(0..<6) {number in
                 NavigationLink(destination:
-                                SubMainView(number: number)
+                                NeuSectionView(section: sectionData[number])
                 ){
-                    
                     NeuTenView(title: nameData[number])
                         .edgesIgnoringSafeArea(.all)
                 }
@@ -130,9 +129,6 @@ func SubMainView(number: Int) -> some View {
         }
         //.background(BackGroundView)
         .background(Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
-        
-        
-        
 }
 
 

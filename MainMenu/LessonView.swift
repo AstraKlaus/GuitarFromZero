@@ -217,11 +217,7 @@ struct Lesson: View {
                 .sheet(isPresented: $isPresented){SettingsView()}
                 .sheet(isPresented: $youtube){
                     WebView(request: URLRequest(url: URL(string: "https://ru.savefrom.net/36/#url="+youtubeLink.link)!))
-                .frame(maxWidth: .infinity)
                 
-                .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
-                .shadow(color: .black.opacity(0.4), radius: 10, x: 0, y: 0)
-                .padding()
                     
                 }
                 //.background(BackGroundView())
