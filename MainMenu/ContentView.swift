@@ -23,7 +23,7 @@ struct ContentView: View {
             let tabBarAppearance = UITabBarAppearance()
             UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
             tabBarAppearance.configureWithDefaultBackground()
-            tabBarAppearance.backgroundColor = .red
+            tabBarAppearance.backgroundColor = UIColor(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
             UITabBar.appearance().barTintColor = UIColor(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
             UITableView.appearance().backgroundColor = UIColor(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)))
         }
@@ -93,7 +93,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().preferredColorScheme(.light)
+        ContentView().preferredColorScheme(.light).environmentObject(SettingsStore())
     }
 }
 
@@ -108,7 +108,7 @@ struct MainVeiw: View {
                         .edgesIgnoringSafeArea(.all)
                 }
             }
-        }
+        }.environmentObject(SettingsStore())
     }
 }
 

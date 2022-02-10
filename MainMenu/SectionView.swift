@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 
 struct SectionView: View {
@@ -38,8 +39,12 @@ struct SectionView: View {
     }
 }
 
+
+
 struct NeuSectionView: View {
     @Environment(\.colorScheme) var scheme
+    // @AppStorage("checkmark \(lessonDatas.removeFirst())") var checkmark: Bool = false
+    @EnvironmentObject var completed: SettingsStore
     var section: Section
     var body: some View {
         ScrollView {
@@ -64,6 +69,9 @@ struct NeuSectionView: View {
                                         )
                                         .blur(radius: 2)
                                         .padding(3)
+                                        .background(Color(self.completed.isFavorit.contains(item) ? .green : .gray))
+                                        .font(.title)
+                                        .padding()
                             
                                     Image("unnamed")
                                         .resizable()
@@ -88,7 +96,6 @@ struct NeuSectionView: View {
             }
         }
         .background(Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
-        
     }
 }
 

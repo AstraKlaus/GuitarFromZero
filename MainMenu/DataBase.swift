@@ -82,6 +82,8 @@ Section(title: "Урок № " ,text: "Как выбрать гитару, ка�
 ]
 
 var lessonData = Array(0...60)
+var lessonsData = Array(0...60)
+var lessonDatas = Array(0...60)
 
 struct YouTubeLink: Identifiable {
     var id = UUID()

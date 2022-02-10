@@ -23,13 +23,46 @@ class ImageSaver: NSObject {
     }
 }
 
+class Completed: ObservableObject{
+    @Published var completeData: [Int]{
+        didSet{
+            if let encoded = try? JSONEncoder().encode(completeData){
+                UserDefaults.standard.set(encoded, forKey: "Complete")
+            }
+            
+        }
+    }
+    init() {
+        if let complete = UserDefaults.standard.data(forKey: "Complete"){
+            if let decoded = try? JSONDecoder().decode([Int].self, from: complete){
+                self.completeData = decoded
+                
+            }
+        }
+        self.completeData = []
+    }
+}
+
+
+class SettingsStore: ObservableObject{
+    @Published var isFavorit: [Int] {
+        didSet {
+            UserDefaults.standard.set(isFavorit, forKey: "isFavorit")
+        }
+    }
+    init() {
+        self.isFavorit = UserDefaults.standard.array(forKey: "isFavorit") as? [Int] ?? []
+    }
+}
+
 
 struct Lesson: View {
     var section: Section
     var youtubeLink: YouTubeLink
     var song: Song
     @State var selection: Int = 0
-    @EnvironmentObject var favourite: Favourite
+    @StateObject var favourite = Favourite()
+    @StateObject var complete = SettingsStore()
     @State var youtube = false
     @State private var tapText = false
     @State private var tapAccord = false
@@ -43,11 +76,13 @@ struct Lesson: View {
     @State private var tapSong = false
     @State private var tapStar = false
     @GestureState var completed = false
-    @AppStorage("checkmark \(lessonData.removeFirst())") var checkmark:Bool = false
+    @State var checkmarkDone = lessonData.removeFirst()
     @State var isPresented = false
     @State var scrollText = true
     @State private var scrollTextCGPoint: CGPoint = .zero
     @AppStorage("fontSize") var fontSize: Double?
+    //@AppStorage("checkmark \(lessonsData.removeFirst())") var checkmark: Bool = false
+    var checkmark: Bool = false
     @AppStorage("weightSelect") var weightSelect: String?
     @AppStorage("designSelect") var designSelect: String?
     @AppStorage("colorSelect") var colorSelected: Color = Color.black
@@ -197,13 +232,17 @@ struct Lesson: View {
                                         HStack{
                                             Text("Урок № \(youtubeData.firstIndex(where: { $0.link == youtubeLink.link })!)").font(.title3)
                                             Button(action: {
-                                                self.checkmark.toggle()
-                                                
+                                                if complete.isFavorit.contains(checkmarkDone){
+                                                    complete.isFavorit = self.complete.isFavorit.filter{ $0 != checkmarkDone }
+                                                }else{
+                                                    
+                                                    complete.isFavorit.append(checkmarkDone)
+                                                    
+                                                }
                                             }){
-                                                Image(systemName: checkmark ? "checkmark.circle.fill" :"checkmark.circle" ).foregroundColor(checkmark ? .green : .gray).font(.title3)}
+                                                Image(systemName: self.complete.isFavorit.contains(checkmarkDone) ? "checkmark.circle.fill" :"checkmark.circle" ).foregroundColor(self.complete.isFavorit.contains(checkmarkDone) ? .green : .gray).font(.title3)}
                     Button(action: {
                         self.favourite.favourites.append(FavouritesNumbers(number: youtubeData.firstIndex(where: { $0.link == youtubeLink.link })!))
-    
                         self.tapStar.toggle()
                         
                     }){
@@ -223,7 +262,7 @@ struct Lesson: View {
                 //.background(BackGroundView())
                 //.environmentObject(Favourite())
                 .environmentObject(favourite)
-        
+                .environmentObject(complete)
             .background(Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
     }
 }
