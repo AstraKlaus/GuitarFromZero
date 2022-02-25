@@ -49,7 +49,7 @@ struct ContentView: View {
                     
                     .toolbar() {
                         
-                        NavigationLink(destination: SettingsView()){Image(systemName:"gear")
+                        NavigationLink(destination: SettingsView(textOfSong: songsData[2].text[0])){Image(systemName:"gear")
                                 .tag("Settings")
                             .font(.title3)}
                         

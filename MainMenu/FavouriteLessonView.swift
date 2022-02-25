@@ -155,7 +155,7 @@ struct FavouriteLesson: View {
 //                                                Text(tapText ? song.text : "")
 //                                                .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif)).foregroundColor(colorSelected)
 //                                            }.frame(height: scrollText || tapText == false ? 0 : 400)
-                                            Text(tapText && scrollText ? song.text : "")
+                                            Text(tapText && scrollText ? song.text[0] : "")
                                                 .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif))
                                                 .foregroundColor(colorSelected)
                                                 
@@ -174,10 +174,10 @@ struct FavouriteLesson: View {
                 .navigationBarItems(trailing:
                                         HStack{
                                             Text("Урок № \(youtubeData.firstIndex(where: { $0.link == youtubeLink.link })!)").font(.title3)
-                                        Button(action: {UIPasteboard.general.string = self.song.text}, label: {
+                                        Button(action: {UIPasteboard.general.string = self.song.text[0]}, label: {
                                             Image(systemName: "doc.on.doc.fill").font(.title3).foregroundColor(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
                                         }).contextMenu{
-                                            Button(action: {UIPasteboard.general.string = self.song.text
+                                            Button(action: {UIPasteboard.general.string = self.song.text[0]
                                             }){
                                                 Text("Скопировать текст песни")}
                                         }
@@ -185,7 +185,7 @@ struct FavouriteLesson: View {
                                                 Image(systemName: "gear").font(.title3).foregroundColor(Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)))}
                                         })
                         }
-                .sheet(isPresented: $isPresented){SettingsView()}
+        .sheet(isPresented: $isPresented){SettingsView(textOfSong:song.text[0])}
                 .sheet(isPresented: $youtube){
                     WebView(request: URLRequest(url: URL(string: "https://ru.savefrom.net/36/#url="+youtubeLink.link)!))
                 .frame(maxWidth: .infinity)

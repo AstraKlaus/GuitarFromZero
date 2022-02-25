@@ -81,60 +81,17 @@ struct Lesson: View {
     @State var scrollText = true
     @State private var scrollTextCGPoint: CGPoint = .zero
     @AppStorage("fontSize") var fontSize: Double?
-    //@AppStorage("checkmark \(lessonsData.removeFirst())") var checkmark: Bool = false
-    var checkmark: Bool = false
     @AppStorage("weightSelect") var weightSelect: String?
     @AppStorage("designSelect") var designSelect: String?
     @AppStorage("colorSelect") var colorSelected: Color = Color.black
+    var checkmark: Bool = false
+    var nowLesson: Int{
+        youtubeData.firstIndex(where: { $0.link == youtubeLink.link })!
+    }
     var body: some View {
         ScrollView(showsIndicators: false) {
             ScrollViewReader {(proxy: ScrollViewProxy) in
-                
                         VStack{
-                            
-                           /* HStack {
-                                Image(systemName: tapStar ? "star.fill" : "star")
-                                        .font(.title)
-                                        .foregroundColor(.yellow)
-                                        .onTapGesture {
-                                            
-                                            
-                                            //self.favourite.favourites.append(youtubeData.firstIndex(where: { $0.link == strOfLink })!)
-                                            self.favourite.favourites.append(FavouritesNumbers(number: youtubeData.firstIndex(where: { $0.link == youtubeLink.link })!))
-                                            self.tapStar.toggle()
-                                            
-                                        }
-                                Image(systemName: checkmark ? "checkmark.circle.fill" :"checkmark.circle" )
-                                    .overlay(
-                                        Circle()
-                                            .trim(from: completed ? 0.001 :  1, to: 1)
-                                            .stroke(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)), Color(#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing), style: StrokeStyle(lineWidth: 4, lineCap: .round))
-                                            .frame(width: 25,height: 25)
-                                            .rotationEffect(Angle(degrees: 90))
-                                            .rotation3DEffect(
-                                                Angle(degrees: 180),
-                                                axis: (x: 1, y: 0, z: 0)
-                                            )
-                                            .animation(.easeIn)
-                                    )
-                                    .foregroundColor(checkmark ? .green : .gray)
-                                    .font(.title)
-                                    .padding()
-                                    .gesture(
-                                        LongPressGesture().updating($completed){
-                                            currentState, gestureState, transaction in
-                                            gestureState = currentState
-                                        }
-                                        .onEnded{value in
-                                            withAnimation(.spring()){
-                                                self.checkmark.toggle()
-                                            }
-                                        }
-                                    )
-                                
-                            }.padding()
-                           */
-                            
                             WebView(request: URLRequest(url: URL(string: youtubeLink.link)!))
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 170, alignment: .topLeading)
@@ -197,35 +154,39 @@ struct Lesson: View {
                                                 
                                             }
                                         }
-                                        
-//                                            ScrollableView(self.$scrollTextCGPoint, animationDuration: 5.0, showsScrollIndicator: false, forceRefresh: true, stopScrolling: $scrollText) {
-//                                                Text(tapText ? song.text : "")
-//                                                .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif)).foregroundColor(colorSelected)
-//                                            }.frame(height: scrollText || tapText == false ? 0 : 400)
-                                        HStack(alignment: .top) {
-                                            Text(tapText && scrollText ? song.text : "").padding(.horizontal)
-                                                    .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif))
-                                                .foregroundColor(colorSelected)
-                                            Button(action: {UIPasteboard.general.string = self.song.text}, label: {
-                                                Image(systemName: tapText && scrollText ? "doc.on.doc.fill" : ""  ).font(.title2).foregroundColor(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
-                                            }).padding(.horizontal)
-                                                .contextMenu{
-                                                Button(action: {UIPasteboard.general.string = self.song.text
-                                                }){
-                                                    Text("Скопировать текст песни")}
-                                            }
+                                        if tapText && (nowLesson == 6 || nowLesson == 7 || nowLesson == 4) {
+                                        Picker("Вариант игры", selection: $selection){
+                                            Text("Первый текст").tag(0)
+                                            Text("Второй текст").tag(1)
+                                        }.pickerStyle(SegmentedPickerStyle())
+                                            .padding(.horizontal)
                                         }
-                                                
-                                            
-                                        
-                                    
-                                    
+                                        HStack(alignment: .top) {
+
+                                            Text(tapText && scrollText ? song.text[selection] : "").padding(.horizontal)
+                                                    .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif))
+                                                    .foregroundColor(colorSelected).overlay(
+                                                        VStack {
+                                                            HStack {
+                                                                Spacer()
+                                                                Button(action: {UIPasteboard.general.string = self.song.text[selection]}, label: {
+                                                        Image(systemName: tapText && scrollText ? "doc.on.doc.fill" : ""  ).font(.title2).foregroundColor(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
+                                                    }).padding(.horizontal)
+                                                        .contextMenu{
+                                                        Button(action: {UIPasteboard.general.string = self.song.text[selection]
+                                                        }){
+                                                            Text("Скопировать текст песни")}
+                                                    }
+                                                            }
+                                                            Spacer()
+                                                        }
+                                            )
+                                            Spacer()
+                                        }
                                     }
-                                
                             ForEach(0..<song.title.count){ index in
                                 LessonButtonView(boolVar: [self.$tapBoy,self.$tapTrain,self.$tapHowToBoy,self.$tapTrainBoy,self.$tapHowToAccord,self.$tapTrainAccord,self.$tapTrainSong,self.$tapSong][index], text: song.title[index], index: index, song: song).padding(.vertical).id(index+1)
                             }
-                            
                         }
                 }
                 .navigationBarItems(trailing:
@@ -253,7 +214,7 @@ struct Lesson: View {
                                                 Image(systemName: "gear").font(.title3).foregroundColor(Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)))}
                                         })
                         }
-                .sheet(isPresented: $isPresented){SettingsView()}
+        .sheet(isPresented: $isPresented){SettingsView(textOfSong: song.text[selection])}
                 .sheet(isPresented: $youtube){
                     WebView(request: URLRequest(url: URL(string: "https://ru.savefrom.net/36/#url="+youtubeLink.link)!))
                 

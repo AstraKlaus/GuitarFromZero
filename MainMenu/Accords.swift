@@ -93,8 +93,7 @@ struct GameAccords:View {
     @State var random : Int = Int.random(in: 0...2)
     var body: some View{
         ZStack{
-            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1))]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
-            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)).opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
+            LinearGradient(gradient: Gradient(colors: [.white, Color(#colorLiteral(red: 0.9064442515, green: 0.9423683286, blue: 1, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
             VStack(spacing: 30) {
                 VStack{
                     Text("Выбери Аккорд")
@@ -118,22 +117,13 @@ struct GameAccords:View {
                              self.flagTapped(number)
                          }){
                              ZStack {
-                                 Image(self.accordsData[correctLesson][number])
+                                 Image(showingScore ? "\(self.accordsData[correctLesson][number])" : "\(self.accordsData[correctLesson][number]) чистый")
                                      .renderingMode(.original)
                                      .resizable()
                                      .frame(width: 250,height: 145)
                                      .clipShape(RoundedRectangle(cornerRadius: 15))
                                      .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color(.black),lineWidth: 1))
                                      .shadow(color: .black,radius: 2)
-                                     .overlay(
-                                         VStack(spacing:0){
-                                         RoundedRectangle(cornerRadius: 15).frame(width: 150, height: 40, alignment: .top)
-                                             .foregroundColor(.white)
-                                             .opacity(showingScore ? 0 : 1)
-                                             .padding(.leastNormalMagnitude)
-                                             Spacer()
-                                         }
-                                     )
                                  Spacer()
                              }
                          }

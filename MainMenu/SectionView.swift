@@ -61,17 +61,16 @@ struct NeuSectionView: View {
                             .background(
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                        .foregroundColor(.white)
+                                        .foregroundColor(self.completed.isFavorit.contains(item) ? .green : .white)
                                     
                                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                                         .fill(
                                             LinearGradient(gradient: Gradient(colors: [scheme == .light ? Color(#colorLiteral(red: 0.9064442515, green: 0.9423683286, blue: 1, alpha: 1)) : Color(#colorLiteral(red: 0.1097886786, green: 0.1098149046, blue: 0.1183715835, alpha: 1)),scheme == .light ? .white : Color(#colorLiteral(red: 0.1097886786, green: 0.1098149046, blue: 0.1183715835, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
                                         )
-                                        .blur(radius: 2)
-                                        .padding(3)
-                                        .background(Color(self.completed.isFavorit.contains(item) ? .green : .gray))
+                                        .background(Color(#colorLiteral(red: 0.9064442515, green: 0.9423683286, blue: 1, alpha: 1)))
                                         .font(.title)
-                                        .padding()
+                                        .padding(5)
+                                        .blur(radius: 3)
                             
                                     Image("unnamed")
                                         .resizable()

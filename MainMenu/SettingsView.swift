@@ -14,12 +14,13 @@ struct SettingsView: View {
     @AppStorage("weightSelect") var weightSelect: String = "Тонкий"
     @AppStorage("designSelect") var designSelect: String = "Засечки"
     @AppStorage("colorSelect") var colorSelect: Color = Color.black
+    @State var textOfSong: String
     var body: some View {
             Form {
                 VStack{
                     Text("Текст для примера").font(.system(size: CGFloat(fontSize), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif)).foregroundColor(colorSelect)
                     Text("Размер шрифта (\(fontSize, specifier: "%.0f") pts)").padding(.top)
-                    Slider(value: $fontSize, in: 15...45).padding(.horizontal).padding(.horizontal)
+                    Slider(value: $fontSize, in: 10...30).padding(.horizontal).padding(.horizontal)
                     Picker("Жирность: \(weightSelect)", selection: $weightSelect){
                         Text("Тонкий").tag("Тонкий")
                         Text("Обычный").tag("Обычный")
@@ -32,24 +33,13 @@ struct SettingsView: View {
                     }.font(.title2).pickerStyle(SegmentedPickerStyle())
                     ColorPicker("Выбрать цвет:", selection: $colorSelect).font(.title2)
                 }
-                Text("""
-                    Am(4)
-                    Белый снег, серый лед,
-                    　　　　C(4)
-                    На растрескавшейся земле.
-                    　Dm(4)
-                    Одеялом лоскутным на ней -
-                    G(4)
-                    Город в дорожной петле.
-                    　　　Am(4)
-                    А над городом плывут облака,
-                    """).lineSpacing(0)
+                Text(textOfSong).font(.system(size: CGFloat(fontSize-2), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif)).foregroundColor(colorSelect)
             }
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(textOfSong: songsData[2].text[0])
     }
 }
