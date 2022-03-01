@@ -12,7 +12,7 @@ import SwiftUI
 struct MainMenuApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(SettingsStore())
         }
     }
 }

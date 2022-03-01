@@ -250,7 +250,8 @@ G(4)
                 "Урок 2 Как играть Аккорды",
                 "Урок 2 Тренировка",
                 "Урок 2 Пачка сигарет"],
-         text: ["""
+         text: [
+         """
          　 　 Em 　 　Am 　　 　　 　C　　 　 D 　　　Em
          Я сижу и смотрю в чужое небо из чужого окна
          　　Am　　　　C　　　D　　　　Em
@@ -288,7 +289,7 @@ G(4)
          И билет на самолет с серебристым крылом,
          　　 　Am　　　　C　　　　D　　　Em
          Что, взлетая, оставляет земле лишь тень.
-"""], accords: ["Бой","am","c","d","em"]),
+         """], accords: ["Бой","am","c","d","em"]),
     Song(link: ["https://www.youtube.com/embed/36u-J2goC4k",
                 "https://www.youtube.com/embed/R4QdytFEl7U",
                 "https://www.youtube.com/embed/blgOcORb26c",

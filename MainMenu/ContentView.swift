@@ -37,7 +37,6 @@ struct ContentView: View {
                         .edgesIgnoringSafeArea(.all)
                     ScrollView(showsIndicators: false){
                         MainVeiw()
-                        ExtraLessonView()
                     }
                     //.background(BackGroundView())
                     
@@ -84,8 +83,8 @@ struct ContentView: View {
             
         }.background(Color(#colorLiteral(red: 0.8980392157, green: 0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
             .accentColor(scheme == .light ?  Color(#colorLiteral(red: 0.09178318828, green: 0.09180641919, blue: 0.09178014845, alpha: 1)) : Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1))).edgesIgnoringSafeArea(.all)
-            .environmentObject(favourite)
             .tabViewStyle(DefaultTabViewStyle())
+            .environmentObject(favourite)
     }
 }
 
@@ -93,11 +92,12 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().preferredColorScheme(.light).environmentObject(SettingsStore())
+        ContentView().preferredColorScheme(.light).environmentObject(SettingsStore()).environmentObject(Favourite())
     }
 }
 
 struct MainVeiw: View {
+    
     var body: some View {
         VStack(alignment: .center, spacing:0){
             ForEach(0..<6) {number in
@@ -108,7 +108,7 @@ struct MainVeiw: View {
                         .edgesIgnoringSafeArea(.all)
                 }
             }
-        }.environmentObject(SettingsStore())
+        }
     }
 }
 
@@ -116,19 +116,3 @@ let nameData = ["№0-9","№10-20","№20-30","№30-40","№40-50","№50-60",
 let numbersData = [0,11,21,31,41,51,61]
 let colorsData = [UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),UIColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),]
 
-
-
-struct ExtraLessonView: View {
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("Дополнения:")
-                .font(.title)
-                .frame(maxWidth: .infinity)
-            NavigationLink(destination: ScrollView {
-                SectionView(section: Section(title: "10", text: "Дополнительный урок"))
-            }) {
-                TenView(title: "Дополнительные Уроки")
-            }
-        }
-    }
-}

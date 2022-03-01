@@ -43,8 +43,7 @@ struct SectionView: View {
 
 struct NeuSectionView: View {
     @Environment(\.colorScheme) var scheme
-    // @AppStorage("checkmark \(lessonDatas.removeFirst())") var checkmark: Bool = false
-    @EnvironmentObject var completed: SettingsStore
+    @StateObject var completed = SettingsStore()
     var section: Section
     var body: some View {
         ScrollView {
@@ -61,8 +60,7 @@ struct NeuSectionView: View {
                             .background(
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                        .foregroundColor(self.completed.isFavorit.contains(item) ? .green : .white)
-                                    
+                                        .foregroundColor(completed.isContains(item) ? .green : .white)
                                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                                         .fill(
                                             LinearGradient(gradient: Gradient(colors: [scheme == .light ? Color(#colorLiteral(red: 0.9064442515, green: 0.9423683286, blue: 1, alpha: 1)) : Color(#colorLiteral(red: 0.1097886786, green: 0.1098149046, blue: 0.1183715835, alpha: 1)),scheme == .light ? .white : Color(#colorLiteral(red: 0.1097886786, green: 0.1098149046, blue: 0.1183715835, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -71,7 +69,7 @@ struct NeuSectionView: View {
                                         .font(.title)
                                         .padding(5)
                                         .blur(radius: 3)
-                            
+                                    
                                     Image("unnamed")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
@@ -95,7 +93,6 @@ struct NeuSectionView: View {
             }
         }
         .background(Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1)).edgesIgnoringSafeArea(.all))
+        .environmentObject(completed)
     }
 }
-
-
