@@ -97,10 +97,10 @@ struct Lesson: View {
     @AppStorage("weightSelect") var weightSelect: String?
     @AppStorage("designSelect") var designSelect: String?
     @AppStorage("colorSelect") var colorSelected: Color = Color.black
-    var checkmark: Bool = false
     var nowLesson: Int{
         youtubeData.firstIndex(where: { $0.link == youtubeLink.link })!
     }
+    var checkmark = false
     var body: some View {
         ScrollView(showsIndicators: false) {
             ScrollViewReader {(proxy: ScrollViewProxy) in
@@ -174,28 +174,24 @@ struct Lesson: View {
                             }.pickerStyle(SegmentedPickerStyle())
                                 .padding(.horizontal)
                         }
-                        HStack(alignment: .top) {
-                            
-                            Text(tapText && scrollText ? song.text[selection] : "").padding(.horizontal)
-                                .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif))
-                                .foregroundColor(colorSelected).overlay(
-                                    VStack {
-                                        HStack {
-                                            Spacer()
-                                            Button(action: {UIPasteboard.general.string = self.song.text[selection]}, label: {
-                                                Image(systemName: tapText && scrollText ? "doc.on.doc.fill" : ""  ).font(.title2).foregroundColor(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
-                                            }).padding(.horizontal)
-                                                .contextMenu{
-                                                    Button(action: {UIPasteboard.general.string = self.song.text[selection]
-                                                    }){
-                                                        Text("Скопировать текст песни")}
-                                                }
-                                        }
-                                        Spacer()
+                        VStack {
+                            HStack(alignment: .top) {
+                                Text(tapText && scrollText ? song.text[selection] : "").padding(.horizontal)
+                                    .font(.system(size: CGFloat(fontSize ?? 10), weight: weightSelect == "Тонкий" ? .thin : weightSelect == "Обычный" ? .regular : weightSelect == "Полужирный" ? .light : . bold, design: designSelect == "Округленный" ? .rounded : .serif))
+                                    .foregroundColor(colorSelected)
+                                Spacer()
+                                Button(action: {UIPasteboard.general.string = self.song.text[selection]}, label: {
+                                    Image(systemName: tapText && scrollText ? "doc.on.doc.fill" : ""  ).font(.title2).foregroundColor(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
+                                }).padding(.horizontal)
+                                    .contextMenu{
+                                        Button(action: {UIPasteboard.general.string = self.song.text[selection]
+                                        }){
+                                            Text("Скопировать текст песни")}
                                     }
-                                )
+                            }
                             Spacer()
                         }
+                        
                     }
                     ForEach(0..<song.title.count){ index in
                         LessonButtonView(boolVar: [self.$tapBoy,self.$tapTrain,self.$tapHowToBoy,self.$tapTrainBoy,self.$tapHowToAccord,self.$tapTrainAccord,self.$tapTrainSong,self.$tapSong][index], text: song.title[index], index: index, song: song).padding(.vertical).id(index+1)
@@ -214,13 +210,12 @@ struct Lesson: View {
                 }){
                     Image(systemName: complete.completed.contains(nowLesson) ? "checkmark.circle.fill" :"checkmark.circle" ).foregroundColor(complete.completed.contains(nowLesson) ? .green : .gray).font(.title3)}
                 Button(action: {
-                    self.favourite.addItem(nowLesson)
-                    self.tapStar.toggle()
-                    
+                    favourite.isContains(nowLesson) ? favourite.uselessThing(nowLesson) : self.favourite.addItem(nowLesson)
                 }){
-                    Image(systemName: tapStar ? "star.fill" : "star")
+                    Image(systemName: favourite.isContains(nowLesson) ? "star.fill" : "star")
                         .font(.title2)
                     .foregroundColor(.yellow)}
+                
                 Button(action: {self.isPresented.toggle()}){
                     Image(systemName: "gear").font(.title3).foregroundColor(Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)))}
             })
@@ -298,7 +293,7 @@ struct LessonButtonView: View {
                 
             )
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .shadow(color: Color(#colorLiteral(red: 0.7608050108, green: 0.8164883852, blue:              0.9259157777, alpha: 1)), radius: 25, x: 20, y: 20)
+            .shadow(color: Color(#colorLiteral(red: 0.7608050108, green: 0.8164883852, blue:0.9259157777, alpha: 1)), radius: 25, x: 20, y: 20)
             .shadow(color: Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), radius: 20, x: -15, y: -15)
             VStack{
                 if boolVar == true && index != 789{

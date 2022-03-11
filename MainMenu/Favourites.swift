@@ -27,7 +27,12 @@ import Combine
     func addItem(_ item: Int){
         self.favourites.append(item)
         UserDefaults.standard.set(favourites, forKey: "favor")
-        
+    }
+    func isContains(_ item: Int) -> Bool{
+        self.favourites.contains(item)
+    }
+    func uselessThing(_ item: Int){
+        self.favourites = self.favourites.filter{ $0 != item }
     }
     init() {
         self.favourites = UserDefaults.standard.array(forKey: "favor") as? [Int] ?? []
@@ -66,8 +71,7 @@ struct FavouritesView: View {
 }
 
 func SubFavouriteView(number: Int) -> some View {
-    return
-    NavigationLink(
+    return NavigationLink(
         destination:
             FavouriteLesson(section: sectionData[number], youtubeLink: youtubeData[number], song: songsData[number <= 10 ? number : 0])
         

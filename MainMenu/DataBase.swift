@@ -166,7 +166,11 @@ struct Song: Identifiable {
 }
 
 let songsData = [
-    Song(link: [], title: [], text: [""], accords: []),
+    Song(link: [], title: [], text: [
+"""
+Здесь будет полезная информация
+
+"""], accords: []),
     Song(link: ["https://www.youtube.com/embed/jlfnm6AyqqU",
                 "https://www.youtube.com/embed/NTySGBsOgVI",
                 "https://www.youtube.com/embed/IDn4RG3o1sM",

@@ -10,9 +10,11 @@ import SwiftUI
 @main
 
 struct MainMenuApp: App {
+    @StateObject var favourite = Favourite()
+    @StateObject var completed = SettingsStore()
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(SettingsStore())
+            ContentView().environmentObject(favourite).environmentObject(completed)
         }
     }
 }
