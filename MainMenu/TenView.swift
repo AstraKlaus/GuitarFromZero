@@ -43,40 +43,51 @@ struct NeuTenView: View {
                 Color(#colorLiteral(red: 0.8980392157, green:0.9333333333, blue: 1, alpha: 1))
                     .edgesIgnoringSafeArea(.all)
                     .padding()
-                VStack {
-                    Text(title)
-                        .font(.system(size: 28, weight: .semibold, design: .rounded))
-                        .padding(.horizontal)
-                        .frame(width: 350, height: 100,alignment: .center)
-                        .background(
+                HStack {
+
+                    Image(Int.random(in: 1..<3) == 1 ? "Guitar2" : "Guitar1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(Rectangle())
+                        .frame(width: 130,height:120)
+                        
+                    VStack(alignment:.leading) {
+                        Text("Начинающий")
+                            .font(.system(size: 24, weight: .regular, design: .rounded))
                             
-                            ZStack {
-                                
-                                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                    .foregroundColor(checkmark ? .green : .white)
-                                    
-                                    
-                                
-                                    
-                                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                    .fill(
-                                        LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.9064442515, green: 0.9423683286, blue: 1, alpha: 1)), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                                    )
-                                    .padding(3)
-                                    .blur(radius: 2)
-                                Text("Уроки")
-                                    .font(.system(size: 20, weight: .medium, design: .rounded))
-                                    
-                                    .frame(width: 350, height: 80,alignment: .top)
-                                
-                            }
-                            
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                        .shadow(color: Color(#colorLiteral(red: 0.7608050108, green: 0.8164883852, blue:              0.9259157777, alpha: 1)), radius: 25, x: 10, y: 10)
-                        .shadow(color: Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), radius: 25, x: -20, y: -20)
-                        .multilineTextAlignment(.center)
-                }
+                        Text("Уроки:")
+                            .font(.system(size: 18, weight: .regular, design: .rounded))
+                            .foregroundColor(.gray)
+                        Text(title)
+                            .font(.system(size: 24, weight: .regular, design: .rounded))
+                        
+                    }.frame(maxWidth: .infinity).frame(height: 120)
+                    
+                    
+                }.padding(.horizontal)
+                .background(
+                    ZStack {
+                        Image(uiImage: #imageLiteral(resourceName: "pagination"))
+                            .frame(maxWidth: .infinity)
+                    }
+                    
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .shadow(color: Color(#colorLiteral(red: 0.7608050108, green: 0.8164883852, blue:              0.9259157777, alpha: 1)), radius: 25, x: 10, y: 10)
+                .shadow(color: Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), radius: 25, x: -20, y: -20)
+                .multilineTextAlignment(.center)
+                
+            }
+            
+            .padding()
+            
+        }
+    }
+}
+
+
+
+                /*
                 Image("unnamed")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -114,10 +125,4 @@ struct NeuTenView: View {
                         }
                     )
                     .offset(x: 136, y: 13)
-            }
-            
-            .padding()
-            
-        }
-    }
-}
+                */

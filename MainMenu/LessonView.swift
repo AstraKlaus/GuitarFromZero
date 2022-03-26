@@ -276,25 +276,15 @@ struct LessonButtonView: View {
             .frame(width: 350, height: 50,alignment: .leading)
             .background(
                 ZStack {
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .foregroundColor(.white)
-                        .blur(radius: 8)
-                        .offset(x: -8, y: -8)
-                    
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(
-                            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.9064442515, green: 0.9423683286, blue: 1, alpha: 1)).opacity(0.5), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            
-                        )
-                        .padding(1)
-                        .blur(radius: 2)
+                    Image(uiImage: #imageLiteral(resourceName: "LessonButton"))
+                   
                     
                 }
                 
             )
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .shadow(color: Color(#colorLiteral(red: 0.7608050108, green: 0.8164883852, blue:0.9259157777, alpha: 1)), radius: 25, x: 20, y: 20)
-            .shadow(color: Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), radius: 20, x: -15, y: -15)
+            .shadow(color: Color(#colorLiteral(red: 0.7608050108, green: 0.8164883852, blue:0.9259157777, alpha: 1)), radius: 25, x: 10, y: 10)
+            .shadow(color: Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), radius: 20, x: -5, y: -5)
             VStack{
                 if boolVar == true && index != 789{
                     WebView(request: URLRequest(url: URL(string: song.link[index])!))

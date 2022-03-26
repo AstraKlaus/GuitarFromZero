@@ -59,17 +59,8 @@ struct NeuSectionView: View {
                             .frame(width: 350, height: 100,alignment: .leading)
                             .background(
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                        .foregroundColor(completed.isContains(item) ? .green : .white)
-                                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                        .fill(
-                                            LinearGradient(gradient: Gradient(colors: [scheme == .light ? Color(#colorLiteral(red: 0.9064442515, green: 0.9423683286, blue: 1, alpha: 1)) : Color(#colorLiteral(red: 0.1097886786, green: 0.1098149046, blue: 0.1183715835, alpha: 1)),scheme == .light ? .white : Color(#colorLiteral(red: 0.1097886786, green: 0.1098149046, blue: 0.1183715835, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                                        )
-                                        .background(Color(#colorLiteral(red: 0.9064442515, green: 0.9423683286, blue: 1, alpha: 1)))
-                                        .font(.title)
-                                        .padding(5)
-                                        .blur(radius: 3)
-                                    
+                                    Image(uiImage: #imageLiteral(resourceName: "pagination"))
+                                   
                                     Image("unnamed")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
